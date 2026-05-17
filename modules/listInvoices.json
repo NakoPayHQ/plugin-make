@@ -1,0 +1,26 @@
+{
+    "name": "listInvoices",
+    "label": "List Invoices",
+    "description": "List recent invoices with optional status filter.",
+    "type": "action",
+    "connection": "nakopay",
+    "parameters": [
+        { "name": "status", "label": "Status", "type": "select", "required": false, "options": ["pending", "paid", "expired", "canceled"] },
+        { "name": "limit", "label": "Limit", "type": "number", "required": false, "default": 20 }
+    ],
+    "url": "https://daslrxpkbkqrbnjwouiq.supabase.co/functions/v1/invoices-list",
+    "method": "GET",
+    "headers": {
+        "Authorization": "Bearer {{connection.apiKey}}",
+        "X-NakoPay-Version": "2025-04-20",
+        "Accept": "application/json"
+    },
+    "qs": {
+        "status": "{{parameters.status}}",
+        "limit": "{{parameters.limit}}"
+    },
+    "output": [
+        { "name": "data", "label": "Invoices", "type": "array" },
+        { "name": "has_more", "label": "Has More", "type": "boolean" }
+    ]
+}

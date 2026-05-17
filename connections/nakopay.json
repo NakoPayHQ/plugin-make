@@ -1,0 +1,23 @@
+{
+    "name": "nakopay",
+    "label": "NakoPay",
+    "type": "apikey",
+    "parameters": [
+        {
+            "name": "apiKey",
+            "label": "Secret API Key",
+            "type": "text",
+            "required": true,
+            "help": "Your NakoPay secret key (sk_test_* or sk_live_*). Get one at nakopay.com/dashboard/api-keys."
+        }
+    ],
+    "test": {
+        "url": "https://daslrxpkbkqrbnjwouiq.supabase.co/functions/v1/keys-list",
+        "method": "GET",
+        "headers": {
+            "Authorization": "Bearer {{parameters.apiKey}}",
+            "X-NakoPay-Version": "2025-04-20",
+            "Accept": "application/json"
+        }
+    }
+}

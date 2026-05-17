@@ -1,0 +1,39 @@
+{
+    "name": "invoiceExpired",
+    "label": "Invoice Expired",
+    "description": "Triggers when an invoice expires without payment.",
+    "type": "webhook",
+    "connection": "nakopay",
+    "subscribe": {
+        "url": "https://daslrxpkbkqrbnjwouiq.supabase.co/functions/v1/webhooks-create",
+        "method": "POST",
+        "headers": {
+            "Authorization": "Bearer {{connection.apiKey}}",
+            "X-NakoPay-Version": "2025-04-20",
+            "Content-Type": "application/json"
+        },
+        "body": {
+            "url": "{{webhookUrl}}",
+            "enabled_events": ["invoice.expired"]
+        }
+    },
+    "unsubscribe": {
+        "url": "https://daslrxpkbkqrbnjwouiq.supabase.co/functions/v1/webhooks-delete",
+        "method": "POST",
+        "headers": {
+            "Authorization": "Bearer {{connection.apiKey}}",
+            "X-NakoPay-Version": "2025-04-20",
+            "Content-Type": "application/json"
+        },
+        "body": {
+            "id": "{{subscribeData.id}}"
+        }
+    },
+    "output": [
+        { "name": "id", "label": "Event ID", "type": "text" },
+        { "name": "type", "label": "Event Type", "type": "text" },
+        { "name": "data.object.id", "label": "Invoice ID", "type": "text" },
+        { "name": "data.object.amount", "label": "Amount", "type": "number" },
+        { "name": "data.object.status", "label": "Status", "type": "text" }
+    ]
+}
