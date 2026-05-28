@@ -1,0 +1,39 @@
+{
+    "name": "createInvoice",
+    "label": "Create Invoice",
+    "description": "Create a new crypto payment invoice.",
+    "type": "action",
+    "connection": "nakopay",
+    "parameters": [
+        { "name": "amount", "label": "Amount", "type": "number", "required": true },
+        { "name": "currency", "label": "Currency", "type": "text", "required": true, "default": "USD" },
+        { "name": "coin", "label": "Cryptocurrency", "type": "select", "required": true, "default": "BTC", "options": ["BTC", "LTC", "XMR"] },
+        { "name": "description", "label": "Description", "type": "text", "required": false },
+        { "name": "customer_email", "label": "Customer Email", "type": "email", "required": false }
+    ],
+    "url": "https://api.nakopay.com/v1/invoices-create",
+    "method": "POST",
+    "headers": {
+        "Authorization": "Bearer {{connection.apiKey}}",
+        "X-NakoPay-Version": "2025-04-20",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Idempotency-Key": "idem_make_{{now}}"
+    },
+    "body": {
+        "amount": "{{parameters.amount}}",
+        "currency": "{{parameters.currency}}",
+        "coin": "{{parameters.coin}}",
+        "description": "{{parameters.description}}",
+        "customer_email": "{{parameters.customer_email}}",
+        "metadata": { "source": "make" }
+    },
+    "output": [
+        { "name": "id", "label": "Invoice ID", "type": "text" },
+        { "name": "status", "label": "Status", "type": "text" },
+        { "name": "checkout_url", "label": "Checkout URL", "type": "url" },
+        { "name": "amount", "label": "Amount", "type": "number" },
+        { "name": "currency", "label": "Currency", "type": "text" },
+        { "name": "coin", "label": "Coin", "type": "text" }
+    ]
+}

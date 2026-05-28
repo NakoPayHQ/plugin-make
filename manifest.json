@@ -1,0 +1,18 @@
+{
+    "name": "nakopay",
+    "label": "NakoPay",
+    "version": 1,
+    "description": "Accept Bitcoin and crypto payments. Trigger workflows on invoice events.",
+    "icon": "https://nakopay.com/icon.png",
+    "audience": "global",
+    "categories": ["payment-processing", "cryptocurrency"],
+    "connections": ["nakopay"],
+    "modules": [
+        "createInvoice",
+        "getInvoice",
+        "listInvoices",
+        "createPaymentLink",
+        "invoicePaid",
+        "invoiceExpired"
+    ]
+}
